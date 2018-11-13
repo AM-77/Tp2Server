@@ -1,10 +1,12 @@
 package tp2Server;
 
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 
-public class StockImpl extends UnicastRemoteObject implements IStock {
-	private static final long serialVersionUID = 1L;
+import tp2Server.DetabaseConnection;
+
+public class StockImpl implements IStock {
+
+	private DetabaseConnection dbConnect = new DetabaseConnection();
 	
 	protected StockImpl() throws RemoteException {
 		super();
@@ -12,26 +14,30 @@ public class StockImpl extends UnicastRemoteObject implements IStock {
 
 	@Override
 	public void createArticle(String id, int Q_init) {
-		// TODO Auto-generated method stub
-		
+		dbConnect.addArticle("INSERT INTO `Articles` (`id`, `quantity`, `lastOp`) VALUES ('"+ id +"', '"+ Q_init +"', CURRENT_TIMESTAMP)");
 	}
 
 	@Override
 	public boolean sale(String id, int Q) {
-		// TODO Auto-generated method stub
+		int quantity = dbConnect.getArticle("SELECT * FROM `Articles` WHERE id="+id).getQ();
+		if(Q <= quantity){
+			dbConnect.addArticle("UPDATE `Articles` SET `quantity` = '" + ( quantity - Q ) + "', `lastOp` = CURRENT_TIMESTAMP  WHERE `Articles`.`id` = '"+ id +"'");			
+			return true;
+		}
+		
 		return false;
 	}
 
 	@Override
-	public void approvisionner(String id, int Q) {
-		// TODO Auto-generated method stub
-		
+	public void provision(String id, int Q) {
+		int quantity = dbConnect.getArticle("SELECT * FROM `Articles` WHERE id='"+id+"'").getQ();
+		dbConnect.addArticle("UPDATE `Articles` SET `quantity` = '" + ( quantity + Q ) + "', `lastOp` = CURRENT_TIMESTAMP  WHERE `Articles`.`id` = '"+ id +"'");			
 	}
 
 	@Override
 	public State state(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		Article article = dbConnect.getArticle("SELECT * FROM `Articles` WHERE id='"+id+"'");
+		return new State(article.getId(), article.getQ(), article.getLastOp());
 	}
 
 }
