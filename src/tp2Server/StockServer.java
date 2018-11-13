@@ -2,28 +2,26 @@ package tp2Server;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 
 public class StockServer {
 
 	public static void main(String[] args) {
 		
-		SecurityManager secManager = System.getSecurityManager();
-		if (secManager == null) {
-		System.setSecurityManager(new SecurityManager());
+		SecurityManager securityManager = System.getSecurityManager();
+		if (securityManager == null) {
+			System.setSecurityManager(new SecurityManager());
 		}
 		
 		try {
-			
-			StockImpl stockImpl = new StockImpl();
-			
-			
-			Registry r = LocateRegistry.createRegistry(1099);
-			r.rebind("stockImpl", stockImpl);
-			
-			
+			IStock stockImpl = new StockImpl();
+			IStock stockImplStub = (IStock) UnicastRemoteObject.exportObject(stockImpl, 0);
+			Registry registry = LocateRegistry.createRegistry(1099);
+			registry.rebind("stockImpl", stockImplStub);
 			System.out.println("The server is runnig ...");
 		} catch (Exception e) {
 			System.out.println("There was an exception : " + e);
+			e.printStackTrace();
 		}
 		
 	}
