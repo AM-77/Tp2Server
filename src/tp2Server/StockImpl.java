@@ -10,4 +10,28 @@ public class StockImpl extends UnicastRemoteObject implements IStock {
 		super();
 	}
 
+	@Override
+	public void createArticle(String id, int Q_init) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean sale(String id, int Q) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void approvisionner(String id, int Q) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public State state(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
