@@ -15,11 +15,11 @@ public class StockServer {
 			IStock stockImplStub = (IStock) UnicastRemoteObject.exportObject(stockImpl, 0);
 			Registry registry = LocateRegistry.createRegistry(1099);
 			registry.rebind("stockImpl", stockImplStub);
-			System.out.println("The server is runnig ...");
+			System.out.println("[+] The server is running ...");
 		
 		} catch (Exception e) {
 		
-			System.out.println("There was an exception : " + e);
+			System.out.println("[!] There was an exception : " + e);
 			e.printStackTrace();
 		
 		}
