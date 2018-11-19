@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Date;
 
-public class DetabaseConnection {
+public class DatabaseConnection {
 
 
 	public static boolean addArticle(String sql) throws Exception{
