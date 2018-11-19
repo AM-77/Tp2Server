@@ -9,19 +9,23 @@ import java.util.Date;
 public class DetabaseConnection {
 
 
-	public boolean addArticle(String sql) throws Exception{
-		Connection connection = DriverManager.getConnection( "jdbc:mysql://localhost:3306/Tp2RMI", "root", "");
+	public static boolean addArticle(String sql) throws Exception{
+		/*
+		 * Replace ServerIp by its value.
+		 */
+		Connection connection = DriverManager.getConnection( "jdbc:mysql://ServerIp:3306/Tp2RMI", "root", "");
 		connection.createStatement().executeUpdate(sql);
 		connection.close();
 		return true;
 	}
 	
-	public Article getArticle(String sql) throws Exception{
-		
+	public static Article getArticle(String sql) throws Exception{
 		Article article = null;
 		
-
-		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Tp2RMI", "root", "");
+		/*
+		 * Replace ServerIp by its value.
+		 */
+		Connection connection = DriverManager.getConnection("jdbc:mysql://ServerIp:3306/Tp2RMI", "root", "");
 		Statement statement = connection.createStatement();
 		ResultSet resultSet = statement.executeQuery(sql);
 		
@@ -32,8 +36,7 @@ public class DetabaseConnection {
 		resultSet.close();
 		statement.close();
 		connection.close();
-		
-		
+
 		return article;
 	}
 
