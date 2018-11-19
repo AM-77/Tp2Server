@@ -9,7 +9,7 @@ public class StockServer {
 	public static void main(String[] args) {
 		
 		try {
-			System.setProperty("java.rmi.server.hostname","192.168.43.239");
+			
 			System.setSecurityManager(new SecurityManager());
 			IStock stockImpl = new StockImpl();
 			IStock stockImplStub = (IStock) UnicastRemoteObject.exportObject(stockImpl, 0);
